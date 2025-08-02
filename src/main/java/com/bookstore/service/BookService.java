@@ -1,8 +1,8 @@
 package com.bookstore.service;
 
 import com.bookstore.entity.Book;
+import com.bookstore.entity.MyUser;
 
-import java.nio.channels.FileChannel;
 import java.util.List;
 
 public interface BookService {
@@ -22,4 +22,6 @@ public interface BookService {
     public Book fetchBookByBookAuthor(String bookAuthor);
 
     public Book fetchBookByBookGenre(String bookGenre);
+
+    public void addUser(MyUser user);
 }

@@ -1,6 +1,7 @@
 package com.bookstore.controller;
 
 import com.bookstore.entity.Book;
+import com.bookstore.entity.MyUser;
 import com.bookstore.service.BookService;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -90,6 +92,12 @@ public class BookController {
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public Book bookById(@PathVariable("id") Long bookId) {
         return bookService.fetchBookByBookId(bookId);
+    }
+
+    @PostMapping("/new-user")
+    public String addUser(@RequestBody MyUser user) {
+        bookService.addUser(user);
+        return "User added successfully";
     }
 
 }

@@ -1,7 +1,10 @@
 package com.bookstore.config;
 
+import com.bookstore.service.MyUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -22,11 +25,8 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
 
     @Bean
-    public UserDetailsService userDetailsService(PasswordEncoder encoder) {
-        UserDetails admin =  User.builder().username("admin").password(encoder.encode("admin")).roles("ADMIN").build();
-        UserDetails user =  User.builder().username("user").password(encoder.encode("user")).roles("USER").build();
-
-        return new InMemoryUserDetailsManager(admin,user);
+    public UserDetailsService userDetailsService() {
+        return new MyUserDetailsService();
     }
 
     @Bean
@@ -37,9 +37,17 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(auth -> auth.requestMatchers("/api/books/welcome").permitAll()
+                .authorizeHttpRequests(auth -> auth.requestMatchers("/api/books/welcome", "/api/books/new-user").permitAll()
                         .requestMatchers("/api/books/**").authenticated())
                 .formLogin(AbstractAuthenticationFilterConfigurer::permitAll)
                 .build();
+    }
+
+    @Bean
+    public AuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+        provider.setUserDetailsService(userDetailsService());
+        provider.setPasswordEncoder(passwordEncoder());
+        return provider;
     }
 }
