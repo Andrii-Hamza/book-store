@@ -26,12 +26,12 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Book fetchBookById(Long bookId) {
+    public Book fetchBookByBookId(Long bookId) {
         return bookRepository.findById(bookId).get();
     }
 
     @Override
-    public void deleteBookById(Long bookId) {
+    public void deleteBookByBookId(Long bookId) {
         bookRepository.deleteById(bookId);
     }
 
@@ -62,8 +62,8 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Book fetchBookByTitle(String bookTitle) {
-        return bookRepository.findByTitleIgnoreCase(bookTitle);
+    public Book fetchBookByBookTitle(String bookTitle) {
+        return bookRepository.findByBookTitleIgnoreCase(bookTitle);
     }
 
 }

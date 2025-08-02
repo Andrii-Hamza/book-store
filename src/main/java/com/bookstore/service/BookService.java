@@ -11,12 +11,12 @@ public interface BookService {
 
     public List<Book> fetchBookList();
 
-    public Book fetchBookById(Long bookId);
+    public Book fetchBookByBookId(Long bookId);
 
-    public void deleteBookById(Long bookId);
+    public void deleteBookByBookId(Long bookId);
 
     public Book updateBook(Long bookId, Book book);
 
-    public Book fetchBookByTitle(String bookTitle);
+    public Book fetchBookByBookTitle(String bookTitle);
 
 }

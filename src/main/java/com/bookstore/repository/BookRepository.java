@@ -10,8 +10,8 @@ import java.util.List;
 @Repository
 public interface BookRepository extends JpaRepository<Book,Long> {
 
-    public Book findByTitle(String bookTitle);
+    public Book findByBookTitle(String bookTitle);
 
-    @Query(value = "", nativeQuery = true)
-    public Book findByTitleIgnoreCase(String bookTitle);
+    //@Query(value = "", nativeQuery = true)
+    public Book findByBookTitleIgnoreCase(String bookTitle);
 }
