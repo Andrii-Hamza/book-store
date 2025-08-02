@@ -19,4 +19,7 @@ public interface BookService {
 
     public Book fetchBookByBookTitle(String bookTitle);
 
+    public Book fetchBookByBookAuthor(String bookAuthor);
+
+    public Book fetchBookByBookGenre(String bookGenre);
 }

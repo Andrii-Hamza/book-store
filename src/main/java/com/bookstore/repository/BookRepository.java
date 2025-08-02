@@ -14,4 +14,8 @@ public interface BookRepository extends JpaRepository<Book,Long> {
 
     //@Query(value = "", nativeQuery = true)
     public Book findByBookTitleIgnoreCase(String bookTitle);
+
+    public Book findByBookAuthorIgnoreCase(String bookAuthor);
+
+    public Book findByBookGenreIgnoreCase(String bookGenre);
 }

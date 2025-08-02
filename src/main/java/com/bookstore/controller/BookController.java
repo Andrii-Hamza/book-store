@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -60,6 +61,35 @@ public class BookController {
     @GetMapping("/title/{title}")
     public Book fetchBookByBookTitle(@PathVariable("title") String bookTitle) {
         return bookService.fetchBookByBookTitle(bookTitle);
+    }
+
+    @GetMapping("/author/{author}")
+    public Book fetchBookByBookAuthor(@PathVariable("author") String bookAuthor) {
+        return bookService.fetchBookByBookAuthor(bookAuthor);
+    }
+
+    @GetMapping("/genre/{genre}")
+    public Book fetchBookByBookGenre(@PathVariable("genre") String bookGenre) {
+        return bookService.fetchBookByBookGenre(bookGenre);
+    }
+
+
+
+    @GetMapping("/welcome")
+    public String welcome() {
+        return "Welcome to the unprotected page!";
+    }
+
+    @GetMapping("/all-books")
+    @PreAuthorize("hasAuthority('ROLE_USER')")
+    public List<Book> allBooks() {
+        return bookService.fetchBookList();
+    }
+
+    @GetMapping("/test/{id}")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    public Book bookById(@PathVariable("id") Long bookId) {
+        return bookService.fetchBookByBookId(bookId);
     }
 
 }
