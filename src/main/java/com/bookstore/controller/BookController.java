@@ -1,22 +1,18 @@
 package com.bookstore.controller;
 
 import com.bookstore.entity.Book;
-import com.bookstore.entity.MyUser;
 import com.bookstore.service.BookService;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/books")
+@RequestMapping("/api/book-store")
 @EnableAspectJAutoProxy(proxyTargetClass = true)
 public class BookController {
 
@@ -26,18 +22,18 @@ public class BookController {
     private final Logger LOGGER =
             LoggerFactory.getLogger(BookController.class);
 
-    @GetMapping("/")
+    @GetMapping("/welcome")
     public String hello() {
         return "Hello World!";
     }
 
-    @PostMapping
+    @PostMapping("/savebook")
     public Book saveBook(@Valid @RequestBody Book book) {
         LOGGER.info("Inside saveBook of BookController");
         return bookService.saveBook(book);
     }
 
-    @GetMapping
+    @GetMapping("/booklist")
     public List<Book> fetchBookList() {
        LOGGER.info("Inside fetchBookList of BookController");
         return bookService.fetchBookList();
@@ -73,31 +69,6 @@ public class BookController {
     @GetMapping("/genre/{genre}")
     public Book fetchBookByBookGenre(@PathVariable("genre") String bookGenre) {
         return bookService.fetchBookByBookGenre(bookGenre);
-    }
-
-
-
-    @GetMapping("/welcome")
-    public String welcome() {
-        return "Welcome to the unprotected page!";
-    }
-
-    @GetMapping("/all-books")
-    @PreAuthorize("hasAuthority('ROLE_USER')")
-    public List<Book> allBooks() {
-        return bookService.fetchBookList();
-    }
-
-    @GetMapping("/test/{id}")
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public Book bookById(@PathVariable("id") Long bookId) {
-        return bookService.fetchBookByBookId(bookId);
-    }
-
-    @PostMapping("/new-user")
-    public String addUser(@RequestBody MyUser user) {
-        bookService.addUser(user);
-        return "User added successfully";
     }
 
 }

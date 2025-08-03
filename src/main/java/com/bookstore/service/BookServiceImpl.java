@@ -1,12 +1,9 @@
 package com.bookstore.service;
 
 import com.bookstore.entity.Book;
-import com.bookstore.entity.MyUser;
 import com.bookstore.repository.BookRepository;
-import com.bookstore.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,8 +15,6 @@ public class BookServiceImpl implements BookService {
 
     @Autowired
     private BookRepository bookRepository;
-    private UserRepository userRepository;
-    private PasswordEncoder passwordEncoder;
 
     @Override
     public Book saveBook(Book book) {
@@ -81,12 +76,5 @@ public class BookServiceImpl implements BookService {
     public Book fetchBookByBookGenre(String bookGenre) {
         return bookRepository.findByBookGenreIgnoreCase(bookGenre);
     }
-
-    @Override
-    public void addUser(MyUser user) {
-        user.setUserPassword(passwordEncoder.encode(user.getUserPassword()));
-        userRepository.save(user);
-    }
-
 
 }

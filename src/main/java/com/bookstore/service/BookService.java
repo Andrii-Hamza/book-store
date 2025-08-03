@@ -1,7 +1,6 @@
 package com.bookstore.service;
 
 import com.bookstore.entity.Book;
-import com.bookstore.entity.MyUser;
 
 import java.util.List;
 
@@ -23,5 +22,4 @@ public interface BookService {
 
     public Book fetchBookByBookGenre(String bookGenre);
 
-    public void addUser(MyUser user);
 }
