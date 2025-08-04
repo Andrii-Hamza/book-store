@@ -11,6 +11,7 @@
 	<groupId>com.bookstore</groupId>
 	<artifactId>bookstore</artifactId>
 	<version>1.0.0</version>
+	<packaging>jar</packaging>
 	<name>bookstore</name>
 	<description>Demo project for Spring Boot</description>
 	<url/>
@@ -20,6 +21,12 @@
 	<developers>
 		<developer/>
 	</developers>
+
+<!--	<modules>-->
+<!--		<module>Oauth</module>-->
+
+<!--	</modules>-->
+
 	<scm>
 		<connection/>
 		<developerConnection/>
@@ -78,6 +85,11 @@
 <!--			<groupId>org.springframework.boot</groupId>-->
 <!--			<artifactId>spring-boot-starter-security</artifactId>-->
 <!--		</dependency>-->
+<!--		<dependency>-->
+<!--			<groupId>org.springframework.security</groupId>-->
+<!--			<artifactId>spring-security-test</artifactId>-->
+<!--			<scope>test</scope>-->
+<!--		</dependency>-->
 	</dependencies>
 
 	<build>
@@ -96,5 +108,6 @@
 			</plugin>
 		</plugins>
 	</build>
+
 
 </project>

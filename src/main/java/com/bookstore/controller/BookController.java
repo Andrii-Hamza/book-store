@@ -22,12 +22,12 @@ public class BookController {
     private final Logger LOGGER =
             LoggerFactory.getLogger(BookController.class);
 
-    @GetMapping("/welcome")
+    @GetMapping("/")
     public String hello() {
         return "Hello World!";
     }
 
-    @PostMapping("/savebook")
+    @PostMapping("/saveBook")
     public Book saveBook(@Valid @RequestBody Book book) {
         LOGGER.info("Inside saveBook of BookController");
         return bookService.saveBook(book);
@@ -35,7 +35,7 @@ public class BookController {
 
     @GetMapping("/booklist")
     public List<Book> fetchBookList() {
-       LOGGER.info("Inside fetchBookList of BookController");
+        LOGGER.info("Inside fetchBookList of BookController");
         return bookService.fetchBookList();
     }
 
@@ -45,7 +45,7 @@ public class BookController {
     }
 
     @DeleteMapping("/{id}")
-    public String  deleteBookByBookId(@PathVariable("id") Long bookId) {
+    public String deleteBookByBookId(@PathVariable("id") Long bookId) {
         bookService.deleteBookByBookId(bookId);
         return "Book deleted Successfully";
     }
@@ -69,6 +69,12 @@ public class BookController {
     @GetMapping("/genre/{genre}")
     public Book fetchBookByBookGenre(@PathVariable("genre") String bookGenre) {
         return bookService.fetchBookByBookGenre(bookGenre);
+    }
+
+
+    @GetMapping("/welcome")
+    public String welcome() {
+        return "Welcome to the unprotected page!";
     }
 
 }
