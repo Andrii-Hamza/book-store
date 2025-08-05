@@ -1,25 +1,43 @@
 package com.bookstore.service;
 
-import com.bookstore.entity.Book;
+import com.bookstore.dto.BookDTO;
+import com.bookstore.model.Book;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface BookService {
 
-    public Book saveBook(Book book);
+    List<Book> getAllBooks();
 
-    public List<Book> fetchBookList();
+    Optional<Book> getBookById(Long id);
 
-    public Book fetchBookByBookId(Long bookId);
+    Book createBook(Book book);
 
-    public void deleteBookByBookId(Long bookId);
+    Optional<Book> updateBook(Long id, Book book);
 
-    public Book updateBook(Long bookId, Book book);
+    boolean deleteBook(Long id);
 
-    public Book fetchBookByBookTitle(String bookTitle);
+    Page<Book> searchBooks(String title, String author, String genre, Pageable pageable);
 
-    public Book fetchBookByBookAuthor(String bookAuthor);
 
-    public Book fetchBookByBookGenre(String bookGenre);
+
+//    public Book saveBook(Book book);
+//
+//    public List<Book> fetchBookList();
+//
+//    public Book fetchBookById(Long id);
+//
+//    public void deleteBookById(Long id);
+//
+//    public Book updateBook(Long id, Book book);
+//
+//    public Book fetchBookByTitle(String title);
+//
+//    public Book fetchBookByAuthor(String author);
+//
+//    public Book fetchBookByGenre(String genre);
 
 }
