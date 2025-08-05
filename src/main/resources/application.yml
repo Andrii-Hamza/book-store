@@ -1,31 +1,14 @@
 server:
   port: 8082
 spring:
-#  application:
-#    name: BookManagementSystem  # Application name
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     password: root
     url: jdbc:mysql://localhost:3306/bookstore
     username: root
 
-    hikari:
-      maximum-pool-size: 10  # Maximum number of connections in the pool
-      minimum-idle: 5        # Minimum number of idle connections
-      idle-timeout: 30000    # Time (ms) before an idle connection is removed
-      connection-timeout: 30000  # Maximum time (ms) to wait for a connection
-      max-lifetime: 1800000  # Maximum lifetime (ms) of a connection
-
-
   jpa:
     hibernate:
-      ddl-auto: create-drop  # Automatically create and drop the database schema
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.MySQL8Dialect  # MySQL dialect for Hibernate
+      ddl-auto: update
     show-sql: true
 
-logging:
-  level:
-    org.hibernate.SQL: DEBUG  # Log executed SQL queries
-    org.hibernate.type.descriptor.sql.BasicBinder: TRACE  # Log query parameter values
