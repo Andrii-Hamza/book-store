@@ -2,6 +2,7 @@ package com.bookstore.controller;
 
 import com.bookstore.entity.Book;
 import com.bookstore.service.BookService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -12,29 +13,25 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/books")
+//@RequestMapping("/api/books")
 @EnableAspectJAutoProxy(proxyTargetClass = true)
 @RequiredArgsConstructor
 public class BookController {
-
 
     @Autowired
     private BookService bookService;
 
     private final Logger LOGGER =
             LoggerFactory.getLogger(BookController.class);
-
-    @GetMapping("/")
-    public String hello() {
-        return "Hello World!";
-    }
 
     @PostMapping("/saveBook")
     public Book saveBook(@Valid @RequestBody Book book) {
@@ -80,8 +77,39 @@ public class BookController {
         return bookService.fetchBookByBookGenre(bookGenre);
     }
 
-    @GetMapping("/welcome")
-    public String welcome() {
-        return "Welcome to the unprotected page!";
+
+
+
+
+    @GetMapping("/")
+    public String greet(HttpServletRequest request) {
+        return "Welcome to the unprotected page!" + request.getSession().getId();
     }
+
+//    private List<Book> books = new ArrayList<Book>(List.of(
+//            new Book(1L, "harry", "clowm", "1213", 3.2),
+//            new Book(2L, "toss", "clowm", "1213", 3.4)
+//    ));
+//
+//    @GetMapping("/books")
+//    public List<Book> getBooks() {
+//        return books;
+//    }
+
+    @GetMapping("/books")
+    public List<Book> getBooks() {
+        return bookService.fetchBookList();
+    }
+
+    @PostMapping("/books")
+    public Book addBook(@Valid @RequestBody Book book) {
+        return bookService.saveBook(book);
+    }
+
+    @GetMapping("/csrf-token")
+    public CsrfToken getCsrfToken(HttpServletRequest request) {
+        return (CsrfToken) request.getAttribute("_csrf");
+    }
+
+
 }
