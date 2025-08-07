@@ -25,16 +25,15 @@ public class BookController {
             LoggerFactory.getLogger(BookController.class);
 
 
-
     @PostMapping("/saveBook")
-    //@PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public Book saveBook(@Valid @RequestBody Book book) {
         LOGGER.info("Inside saveBook of BookController");
         return bookService.saveBook(book);
     }
 
     @GetMapping("/booklist")
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    @PreAuthorize("isAuthenticated()")
     public List<Book> fetchBookList() {
         LOGGER.info("Inside fetchBookList of BookController");
         return bookService.fetchBookList();
