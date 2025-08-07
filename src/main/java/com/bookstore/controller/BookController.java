@@ -72,5 +72,9 @@ public class BookController {
         return bookService.fetchBookByBookGenre(bookGenre);
     }
 
+    @GetMapping("/hi")
+    public String helloWorld() {
+        return "Hello World!";
+    }
 }
 
