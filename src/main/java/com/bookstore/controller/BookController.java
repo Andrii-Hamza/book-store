@@ -4,8 +4,6 @@ import com.bookstore.entity.Book;
 import com.bookstore.service.BookService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -21,60 +19,58 @@ public class BookController {
     @Autowired
     private BookService bookService;
 
-    private final Logger LOGGER =
-            LoggerFactory.getLogger(BookController.class);
-
-
-    @PostMapping("/saveBook")
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public Book saveBook(@Valid @RequestBody Book book) {
-        LOGGER.info("Inside saveBook of BookController");
-        return bookService.saveBook(book);
-    }
 
     @GetMapping("/booklist")
     @PreAuthorize("isAuthenticated()")
     public List<Book> fetchBookList() {
-        LOGGER.info("Inside fetchBookList of BookController");
         return bookService.fetchBookList();
     }
 
-    @GetMapping("/{id}")
-    @PreAuthorize("hasAuthority('ROLE_USER')")
+    @GetMapping("/booklist/{id}")
+    @PreAuthorize("isAuthenticated()")
     public Book fetchBookByBookId(@PathVariable("id") Long bookId) {
         return bookService.fetchBookByBookId(bookId);
     }
 
+    @PostMapping("/saveBook")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    public String saveBook(@Valid @RequestBody Book book) {
+        bookService.saveBook(book);
+        return "Book saved successfully";
+    }
+
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public String deleteBookByBookId(@PathVariable("id") Long bookId) {
         bookService.deleteBookByBookId(bookId);
         return "Book deleted Successfully";
     }
 
     @PutMapping("/{id}")
-    public Book updateBook(@PathVariable("id") Long bookId,
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    public String updateBook(@PathVariable("id") Long bookId,
                               @RequestBody Book book) {
-        return bookService.updateBook(bookId, book);
+        bookService.updateBook(bookId, book);
+        return "Book updated successfully";
     }
 
     @GetMapping("/title/{title}")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public Book fetchBookByBookTitle(@PathVariable("title") String bookTitle) {
         return bookService.fetchBookByBookTitle(bookTitle);
     }
 
     @GetMapping("/author/{author}")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public Book fetchBookByBookAuthor(@PathVariable("author") String bookAuthor) {
         return bookService.fetchBookByBookAuthor(bookAuthor);
     }
 
     @GetMapping("/genre/{genre}")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public Book fetchBookByBookGenre(@PathVariable("genre") String bookGenre) {
         return bookService.fetchBookByBookGenre(bookGenre);
     }
 
-    @GetMapping("/hi")
-    public String helloWorld() {
-        return "Hello World!";
-    }
 }
 
