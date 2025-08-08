@@ -8,7 +8,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 
-
+/**
+ * This class initializes default users and roles in the database
+ * when the application starts, if no users are found.
+ */
 @Configuration
 public class DataInitializer implements CommandLineRunner {
 
@@ -23,7 +26,6 @@ public class DataInitializer implements CommandLineRunner {
      * @param userRepository  repository for managing user data
      * @param passwordEncoder password encoder for securing passwords
      */
-
     public DataInitializer(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
@@ -44,16 +46,18 @@ public class DataInitializer implements CommandLineRunner {
         }
 
         // Create a user with the admin role
-        Users admin = new Users();
-        admin.setUserPassword(passwordEncoder.encode("admin"));
-        admin.setUserName("admin");
-        admin.setUserRole("ROLE_ADMIN");
+        Users admin = new Users(
+                "admin",
+                passwordEncoder.encode("admin"),
+                "ROLE_ADMIN"
+        );
 
         // Create a user with the user role
-        Users user = new Users();
-        user.setUserPassword(passwordEncoder.encode("user"));
-        user.setUserName("user");
-        user.setUserRole("ROLE_USER");
+        Users user = new Users(
+                "user",
+                passwordEncoder.encode("user"),
+                "ROLE_USER"
+        );
 
         // Save users in the database
         userRepository.save(admin);

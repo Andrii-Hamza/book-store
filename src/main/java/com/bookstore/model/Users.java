@@ -21,4 +21,10 @@ public class Users {
     private String userPassword;
     private String userRole;
 
+    public Users(String userName, String userPassword, String userRole) {
+        this.userName = userName;
+        this.userPassword = userPassword;
+        this.userRole = userRole;
+    }
+
 }

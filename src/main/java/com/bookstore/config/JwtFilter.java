@@ -20,12 +20,31 @@ import java.io.IOException;
 @Component
 public class JwtFilter extends OncePerRequestFilter {
 
+    /**
+     * Service for handling JWT operations, such as token creation, validation,
+     * and username extraction.
+     */
     @Autowired
     private JWTService jwtService;
 
+    /**
+     * The Spring application context. It is used to programmatically retrieve
+     * beans, such as the UserDetailsService, when needed.
+     */
     @Autowired
     ApplicationContext context;
 
+    /**
+     * Core method of the filter that performs the authentication logic.
+     * It extracts the JWT token from the request header, validates it, and
+     * sets the user's authentication in the SecurityContext if successful.
+     *
+     * @param request The HTTP request.
+     * @param response The HTTP response.
+     * @param filterChain The filter chain to continue processing the request.
+     * @throws ServletException if a servlet-specific error occurs.
+     * @throws IOException if an I/O error occurs.
+     */
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
